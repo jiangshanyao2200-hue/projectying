@@ -1,6 +1,7 @@
 # Projectying（萤）
 
-一个在 Termux/终端中运行的 Rust TUI（ratatui）项目，支持 MAIN/DOG 双通道与工具调用链。
+一个在 Termux/终端中运行的AI聊天程序（测试中） Rust TUI（ratatui）项目，支持 MAIN/DOG 双通道与工具调用链。（半成品状态）
+
 
 ## Termux 一键运行（自动自检并安装依赖）
 
@@ -8,16 +9,13 @@
 ./run.sh
 ```
 
-只做自检（不会进入 TUI）：
+如有错误运行自检：
 
 ```bash
 ./selfcheck.sh
 ```
 
 直接用 `cargo run` 也会在启动前尝试执行 `scripts/bootstrap.sh` 自动补齐依赖；如需跳过：`cargo run -- --no-bootstrap`。
-
-`./run.sh` 会在首次启动时自动跑一遍自检，并写入首次启动标记（优先 `${XDG_STATE_HOME:-~/.local/state}/projectying/first_run_selfcheck_v1.done`；若不可写则回退到 `${XDG_CACHE_HOME:-~/.cache}/projectying/first_run_selfcheck_v1.done`）；后续启动会跳过自检。
-可用 `./run.sh --force-selfcheck` 重新自检，或 `./run.sh --skip-selfcheck` 跳过首次自检。
 
 ## 依赖自检/自动安装
 
