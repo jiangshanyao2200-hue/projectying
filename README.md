@@ -93,20 +93,30 @@ Termux 一键运行（自动自检并安装依赖）
 默认自带了可用的deepseek key供测试
 
 输入/ settings 进入设置界面
+
 turn dog/main 切换潜意识与主意识（不共享上下文，不使用同一份提示词）
+
 show think 展开思考详情
+
 show mcp detail 展开工具详情
+
 think mcp tools（deepseek有时候会在think中调用工具，为了适配做的支持）
+
 SSE open/close 流式开启关闭
 
 默认推荐 main，折叠思考，折叠工具，开启think mcp，开启流式。
 
 settings 系统配置
+
 上下文；20k，触发上下文压缩的统计，20k推荐
+
 心跳；5/10/30/60 分钟，推荐30分钟。自动发送消息
 动效；开启（我也不知道是什么）
+
 轮窗口：n轮对话触发fastcontext（动态context池）
+
 轮token：触发动态context的总token
+
 摘要池：动态context的摘要条数
 
 
