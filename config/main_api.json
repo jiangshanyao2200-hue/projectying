@@ -1,0 +1,10 @@
+{
+  "api_key": "sk-7707292cd32848ada693b65967f390f7",
+  "provider": "deepseek",
+  "base_url": "https://api.deepseek.com/v1",
+  "model": "deepseek-reasoner",
+  "temperature": 1.0,
+  "timeout_secs": 60,
+  "max_tokens": 5000,
+  "prompt_path": "/data/data/com.termux/files/home/Projectying/prompts/main.txt"
+}

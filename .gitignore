@@ -1,0 +1,6 @@
+/target/
+/log/
+/memory/*
+!/memory/fastmemo.jsonl
+!/memory/token_total.json
+!/memory/memo.db
