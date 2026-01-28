@@ -144,6 +144,7 @@ cp -n config/system.example.json   config/system.json
 1. Termux API：Termux 的 termux-api 包只能提供命令；若命令调用失败，还需要在手机上安装 Termux:API APP 并授予权限。
 2. ADB 工具：未 root 且未建立 TCP ADB 协议的设备，可能导致 AI 执行 adb 命令失败。未 root 的设备请在 dogprompt 中删除 adb 工具说明。
 3. 心跳功能：心跳机制会主动触发聊天，目前处于测试阶段，后台运行需谨慎观察 AI 行为动向。
+4. 若启动卡在“依赖已齐全”，脚本会提示安装 Termux:API（Git：`https://github.com/termux/termux-api`）并尝试执行 `pkg update -y && pkg install -y termux-api` 后跳过；也可手动跳过检测：`PROJECTYING_TERMUX_API_CHECK=0 ./run.sh`，或设置超时：`PROJECTYING_TERMUX_API_TIMEOUT=2 ./run.sh`
 
 ---
 

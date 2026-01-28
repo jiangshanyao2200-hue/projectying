@@ -52,16 +52,53 @@ else
   echo "[bootstrap-termux] 依赖已齐全"
 fi
 
-if command -v termux-battery-status >/dev/null 2>&1; then
-  if ! termux-battery-status >/dev/null 2>&1; then
-    cat >&2 <<'EOF'
-[bootstrap-termux] 注意：termux-api 命令已存在，但调用失败。
-这通常意味着：
-1) 未安装 Android 端的 Termux:API APP；或
-2) 未授予对应权限；或
-3) Termux:API 与 termux-api 包版本不匹配。
-请先在手机上安装 Termux:API 并授予权限，然后重试。
+termux_api_check="${PROJECTYING_TERMUX_API_CHECK:-1}"
+termux_api_timeout="${PROJECTYING_TERMUX_API_TIMEOUT:-2}"
+termux_api_fix="${PROJECTYING_TERMUX_API_FIX:-1}"
+pkg_timeout="${PROJECTYING_PKG_TIMEOUT:-30}"
+termux_api_url="https://github.com/termux/termux-api"
+
+termux_api_hint() {
+  cat >&2 <<EOF
+[bootstrap-termux] 需要安装 Termux:API（手机端应用）并确保权限已授予。
+[bootstrap-termux] Termux:API Git: $termux_api_url
 EOF
+}
+
+try_install_termux_api_pkg() {
+  if [[ "$termux_api_fix" != "1" ]]; then
+    return 0
+  fi
+  echo "[bootstrap-termux] 尝试执行：pkg update -y && pkg install -y termux-api"
+  if command -v timeout >/dev/null 2>&1; then
+    timeout "$pkg_timeout" pkg update -y || true
+    timeout "$pkg_timeout" pkg install -y termux-api || true
+  else
+    pkg update -y || true
+    pkg install -y termux-api || true
+  fi
+}
+
+if [[ "$termux_api_check" == "1" ]] && command -v termux-battery-status >/dev/null 2>&1; then
+  if command -v timeout >/dev/null 2>&1; then
+    rc=0
+    timeout "$termux_api_timeout" termux-battery-status >/dev/null 2>&1 || rc=$?
+    if (( rc != 0 )); then
+      if (( rc == 124 )); then
+        echo "[bootstrap-termux] termux-api 检测超时（可能卡住），将提示并尝试修复后跳过。" >&2
+        termux_api_hint
+        try_install_termux_api_pkg
+      else
+        termux_api_hint
+        try_install_termux_api_pkg
+      fi
+      echo "[bootstrap-termux] 已跳过 termux-api 检测，继续启动。" >&2
+    fi
+  else
+    if ! termux-battery-status >/dev/null 2>&1; then
+      termux_api_hint
+      try_install_termux_api_pkg
+    fi
   fi
 fi
 
