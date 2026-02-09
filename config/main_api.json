@@ -1,5 +1,5 @@
 {
-  "api_key": "sk-7707292cd32848ada693b65967f390f7",
+  "api_key": "",
   "provider": "deepseek",
   "base_url": "https://api.deepseek.com/v1",
   "model": "deepseek-reasoner",
